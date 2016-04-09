@@ -120,8 +120,8 @@ function connect(addresses, opts) {
     return result;
   }
 
-  function addjob(queue, job, timeout) {
-    var args = buildargs(['ADDJOB', queue, job, timeout], [], arguments);
+  function addjob(queue, job, timeout, delay) {
+    var args = buildargs(['ADDJOB', queue, job, timeout, 1, delay||0], [], arguments);
 
     call.apply(this, args);
   }
