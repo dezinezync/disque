@@ -120,8 +120,14 @@ function connect(addresses, opts) {
     return result;
   }
 
-  function addjob(queue, job, timeout, delay) {
-    var args = buildargs(['ADDJOB', queue, job, timeout, "DELAY", delay||0], [], arguments);
+  function addjob(queue, job, timeout, delay, async) {
+    
+    var prelude = ['ADDJOB', queue, job, timeout, 'DELAY', delay||0]
+    
+    if(typeof async === "boolean" && async)
+      prelude.push('ASYNC')
+    
+    var args = buildargs(prelude, [], arguments)
 
     call.apply(this, args);
   }
