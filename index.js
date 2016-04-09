@@ -121,7 +121,7 @@ function connect(addresses, opts) {
   }
 
   function addjob(queue, job, timeout, delay) {
-    var args = buildargs(['ADDJOB', queue, job, timeout, 1, delay||0], [], arguments);
+    var args = buildargs(['ADDJOB', queue, job, timeout, "DELAY", delay||0], [], arguments);
 
     call.apply(this, args);
   }
