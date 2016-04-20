@@ -51,11 +51,12 @@ function connect(addresses, opts) {
 
     sock.on('error', function(err) {
       var cb = ops.shift();
-
       if (cb)
         cb(err);
-      else
+      else {
+        console.error(err.stack)
         throw new Error(err);
+      }
     });
 
     return sock;
@@ -122,18 +123,19 @@ function connect(addresses, opts) {
 
   function addjob(queue, job, timeout, delay, async) {
     
-    var prelude = ['ADDJOB', queue, job, timeout, 'DELAY', delay||0]
+    var prelude = ['ADDJOB']
+    var post = [queue, job, timeout, 'DELAY', delay||0]
     
     if(typeof async === "boolean" && async)
-      prelude.push('ASYNC')
+      post.push('ASYNC')
     
-    var args = buildargs(prelude, [], arguments)
+    var args = buildargs(prelude, post, arguments)
 
     call.apply(this, args);
   }
 
   function getjob(queues) {
-    var args = buildargs(['GETJOB'], ['FROM'].concat(queues), arguments);
+    var args = buildargs(['GETJOB'], ['NOHANG', 'FROM'].concat(queues), arguments);
     var cb = args[args.length - 1] || noop;
 
     args[args.length - 1] = recorder(cb);
@@ -202,6 +204,9 @@ function connect(addresses, opts) {
       iteration++;
 
       if (err) return cb(err);
+
+      if(!jobs)
+        return cb(undefined, [])
 
       for (var i = 0, l = jobs.length; i < l; i++) {
         var job = jobs[i]
