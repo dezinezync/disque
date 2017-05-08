@@ -131,6 +131,8 @@ function connect(addresses, opts) {
     
     var args = buildargs(prelude, post, arguments)
 
+    args = args.filter(i => i)
+
     call.apply(this, args);
   }
 
@@ -140,16 +142,20 @@ function connect(addresses, opts) {
 
     args[args.length - 1] = recorder(cb);
 
+    args = args.filter(i => i)
+
     call.apply(this, args);
   }
 
   function ackjob(ids, cb) {
     var args = ['ACKJOB'];
 
-    if (!(ids instanceof Array)) ids = [ids];
+    if (!(ids instanceof Array)) 
+      ids = [ids];
 
     args.push.apply(args, ids)
     args.push(cb);
+    args = args.filter(i => i)
 
     call.apply(this, args);
   }
