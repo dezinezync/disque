@@ -77,6 +77,9 @@ class Disq {
 
     return this.call.apply(this, [ 'getjob' ].concat(args))
       .then(function(jobs) {
+        if (!jobs)
+          return []
+        
         return jobs.map(function(job) {
           return {
             queue: job[0],
