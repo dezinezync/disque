@@ -61,7 +61,7 @@ class Disq {
         .map(pairify(options))
         .reduce((accum, pair) => accum.concat(pair), []);
 
-      return this.call.apply(this, [ 'addjob', queue, job, timeout ].concat(args));
+      return this.call.apply(this, [ 'ADDJOB', queue, job, timeout ].concat(args));
     }
     else
       return this.call('addjob', queue, job, 0);
@@ -75,7 +75,7 @@ class Disq {
 
     args.push('from', queue);
 
-    return this.call.apply(this, [ 'getjob' ].concat(args))
+    return this.call.apply(this, [ 'GETJOB' ].concat(args))
       .then(function(jobs) {
         if (!jobs)
           return []
