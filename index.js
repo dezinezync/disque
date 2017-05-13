@@ -131,8 +131,6 @@ function connect(addresses, opts) {
     
     var args = buildargs(prelude, post, arguments)
 
-    args = args.filter(i => i)
-
     call.apply(this, args);
   }
 
@@ -141,8 +139,6 @@ function connect(addresses, opts) {
     var cb = args[args.length - 1] || noop;
 
     args[args.length - 1] = recorder(cb);
-
-    args = args.filter(i => i)
 
     call.apply(this, args);
   }
@@ -154,8 +150,8 @@ function connect(addresses, opts) {
       ids = [ids];
 
     args.push.apply(args, ids)
-    args.push(cb);
-    args = args.filter(i => i)
+    if (cb)
+      args.push(cb)
 
     call.apply(this, args);
   }
