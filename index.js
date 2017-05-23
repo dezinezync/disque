@@ -2,12 +2,10 @@
 
 const hiredis = require('hiredis');
 
-
 const slice   = Array.prototype.slice;
 const reader  = new hiredis.Reader();
 
-
-class Disq {
+class Disque {
   constructor(config) {
     if (config instanceof Function)
       this.config = config;
@@ -90,17 +88,12 @@ class Disq {
       });
   }
 
-  ackjob(ids, cb) {
-    var args = ['ACKJOB'];
-
+  ackjob(ids) {
+    
     if (!(ids instanceof Array)) 
       ids = [ids];
 
-    args.push.apply(args, ids)
-    if (cb)
-      args.push(cb)
-
-    this.call(args)
+    return this.call('ACKJOB', ...ids)
   }
 
   info() {
@@ -143,5 +136,4 @@ function pairify(obj) {
   };
 }
 
-
-module.exports = Disq;
+module.exports = Disque;
