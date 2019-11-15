@@ -4,9 +4,6 @@ A simple Disque client for Node.js and io.js.
 
 Currently under development, but it's already usable and useful.
 
-Inspired by [redic.js](https://github.com/cyx/redic.js) (which is inspired
-by [Redic](https://github.com/amakawa/redic)).
-
 # Usage
 
 ```javascript
@@ -43,27 +40,8 @@ If you need to use authentication, pass in the `auth` option:
 var client = disque.connect('127.0.0.1:7711', { auth: 'foobar' });
 ```
 
-# Features
-
-- **Automatic connection to the most convenient node in the cluster.**
-
-  While consuming jobs with `disque.getjob`, the client will periodically
-  check which node is producing the most jobs. In order to consume these more
-  efficiently and to minimize message exchange in the cluster, the client will
-  automatically reconnect to this node.
-
-  The frequency of this check is configurable via the `cycle` option.
-
-  Note that we limit this automatic reconnection to the initial node list you
-  provide on connect.
-
-# Roadmap
-
-- Make all methods optionally return a Promise.
-- Keep a stats counter by queue name?
-
 # License
 
 MIT.
 
-Originally forked from Cyril David's [redic.js](https://github.com/cyx/redic.js).
+Originally forked from [djanowski/disq](https://github.com/djanowski/disq).
