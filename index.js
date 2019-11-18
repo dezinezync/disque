@@ -79,7 +79,7 @@ class Disque {
             .map(pairify(options))
             .reduce((accum, pair) => accum.concat(pair), []);
 
-        args.push('from', ...queue);
+        args.push('from', queue);
 
         return this.call('GETJOB', args)
         .then(function(jobs) {
