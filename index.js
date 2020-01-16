@@ -81,7 +81,7 @@ class Disque {
 
         args.push('from', queue);
 
-        return this.call('GETJOB', args)
+        return this.call.apply(this, ['GETJOB', args])
         .then(function(jobs) {
 
             if (!jobs) {
@@ -101,10 +101,11 @@ class Disque {
 
     ackjob(ids) {
 
-        if (!(ids instanceof Array)) 
+        if (!(ids instanceof Array)) {
             ids = [ids];
+        }
 
-        return this.call('ACKJOB', ...ids)
+        return this.call.apply(this, ['ACKJOB', ids]);
 
     }
 
